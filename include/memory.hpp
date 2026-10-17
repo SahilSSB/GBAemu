@@ -31,6 +31,9 @@ constexpr u32 ROM_SRAM_SIZE = 64*1024;
 
 constexpr int SP = 13, LR = 14, PC = 15;  
 
+constexpr u32 EWRAM_MASK = EWRAM_SIZE - 1;  // 0x3FFFF
+constexpr u32 IWRAM_MASK = IWRAM_SIZE -1;   // 0x7FFF
+
 typedef struct Registers {
   // general purpose registers including sp(13), pc(15) and lr(14)
   u32 R[16] {};  
@@ -50,7 +53,7 @@ class Memory {
     
     bool loadROM(const std::string &filename);
     u32 read32Bits(u32 addr);
-    u32 write32Bits(u32 bits);
+    void write32Bits(u32 addr, u32 val);
 };
 
 class CPU {

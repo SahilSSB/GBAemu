@@ -5,7 +5,10 @@
 #define WINDOW_HEIGHT 600
 
 
-CPU::CPU(Memory& m) : mem(m) {regs.R[PC] = 0x08000000;} 
+CPU::CPU(Memory& m) : mem(m) {
+  regs.R[PC] = 0x08000000;
+  regs.R[SP] = 0x03007F00;
+} 
 
 int main(int argc, char** argv) {
   Memory mem;
@@ -16,8 +19,10 @@ int main(int argc, char** argv) {
   }
 
   //testing 
-  for (int i = 0; i < 5; i++) cpu.step();
-  
+  // for (int i = 0; i < 5; i++) cpu.step();
+  mem.write32Bits(0x03007EF4, 0x080000C4);
+  std::cout << std::hex << mem.read32Bits(0x03007EF4) << "\n";
+
   // sdl3 init which i will use later when i write the graphics part of the emulator
   // if (!SDL_Init(SDL_INIT_VIDEO)) {
   //   SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "Error",
